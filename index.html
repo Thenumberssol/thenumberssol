@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>The Numbers</title>
+    <link rel="icon" type="image/x-icon" href="/icon.jpg">
+    <style>
+        @font-face {
+            font-family: 'NightmarePills';
+            src: url('NightmarePills.ttf') format('truetype');
+        }
+
+        :root {
+            --size: 100px;
+        }
+
+        html {
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            font-family: NightmarePills;
+        }
+
+        body {
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #main {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+        }
+
+        #background {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        #textarea {
+            position: absolute;
+
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            margin-top: -70px;
+
+            padding: 7% 13%;
+            padding-top: 13% !important;
+            padding-bottom: 13% !important;
+            border-radius: 10%;
+
+            width: 50%;
+            height: 40%;
+
+            animation: big 2s;
+        }
+
+        @keyframes big {
+            0% {
+                transform: scale(0.1) rotate(720deg);
+            }
+
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .title:after {
+            content: "The Numbers";
+        }
+
+        .title:hover:after {
+            content: "What do they mean?";
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .text {
+            font-size: 3vh;
+            color: white;
+            font-weight: bold;
+            margin: 0;
+            text-align: center;
+            cursor: default;
+            white-space: nowrap;
+        }
+
+        .socialmedia {
+            height: 11%;
+            width: 100%;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            gap: 8%;
+        }
+
+        .link {
+            height: 200% !important;
+            cursor: pointer;
+        }
+
+        .link:hover {
+            transform: translateY(-10%);
+        }
+
+        #telegram {
+            height: 80%;
+        }
+
+        #x {
+            height: 100%;
+        }
+
+        .number {
+            font-family: 'Courier New', Courier, monospace;
+            color: white;
+            position: absolute;
+            width: fit-content;
+            height: fit-content;
+            font-size: 200%;
+
+            animation: rotation 2s infinite linear;
+        }
+
+        @keyframes rotation {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <img id="background" src="photo.jpg" alt="background" />
+        <div class="number">4</div>
+        <div class="number">8</div>
+        <div class="number">15</div>
+        <div class="number">16</div>
+        <div class="number">23</div>
+        <div class="number">42</div>
+        <div class="number">4</div>
+        <div class="number">8</div>
+        <div class="number">15</div>
+        <div class="number">16</div>
+        <div class="number">23</div>
+        <div class="number">42</div>
+        <div id="textarea">
+            <p class="text title" style="font-size: 5vh"></p>
+            <p class="text" onmouseover="fadeOut(this)" style="font-size: 4vh; margin-bottom: 15%;">$NMBRS</p>
+            <p class="text">Chart:</p>
+            <p class="text">Coming Soon...</p>
+            <p class="text">Contract:</p>
+            <p class="text" style="margin-bottom: 15%;">Coming Soon...</p>
+            <div class="socialmedia">
+                <a class="link" href="https://t.me/+_nnv7ABHTgdiNTc0" target="_blank" style="margin-top: 4%;">
+                    <img id="telegram" src="/telegram.svg" alt="telegram" />
+                </a>
+                <a class="link" href="https://twitter.com/thenumberssol" target="_blank">
+                    <img id="x" src="/x.svg" alt="x" />
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //document.body.addEventListener('touchmove', function (e) { e.preventDefault(); });
+        function fadeOut(elm) {
+            elm.style.animation = "fadeOut 1.5s forwards";
+        }
+
+        function randomIntFromInterval(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min)
+        }
+
+        const speedSelections = [5, 6, 7]
+        function handleNumber(number) {
+            let x_incr = randomIntFromInterval(0, 1) === 0 ? 1 : -1;
+            let y_incr = randomIntFromInterval(0, 1) === 0 ? 1 : -1;
+
+            function handleCollision(number) {
+                let number_height = number.offsetHeight;
+                let number_width = number.offsetWidth;
+                let left = number.offsetLeft;
+                let top = number.offsetTop;
+                let win_height = window.innerHeight;
+                let win_width = window.innerWidth;
+
+                if (left <= 0 || left + number_width >= win_width) {
+                    x_incr = ~x_incr + 1;
+                }
+                if (top <= 0 || top + number_height >= win_height) {
+                    y_incr = ~y_incr + 1;
+                }
+            }
+
+            function frame() {
+                handleCollision(number);
+                number.style.top = `${number.offsetTop + y_incr}px`;
+                number.style.left = `${number.offsetLeft + x_incr}px`;
+            }
+
+            setInterval(frame, speedSelections[Math.floor(Math.random() * speedSelections.length)]);
+        }
+
+        function startNumbers() {
+            let numbers = document.getElementsByClassName('number');
+
+            for (const number of numbers) {
+                number.style.top = `${randomIntFromInterval(10, 90)}%`;
+                number.style.left = `${randomIntFromInterval(10, 90)}%`;
+                handleNumber(number);
+            }
+        }
+
+        startNumbers();
+
+    </script>
+</body>
+
+</html>
